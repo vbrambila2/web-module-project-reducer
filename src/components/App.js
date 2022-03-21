@@ -2,11 +2,10 @@ import React, { useReducer } from 'react';
 import reducer, { initialState } from '../reducers';
 
 import './App.css';
-import { applyNumber, changeOperation, clearDisplay } from '../actions';
+import { applyNumber, changeOperation, clearDisplay, mPlus, MR, MC } from '../actions';
 
 import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
-//import { addOne } from '../actions';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -21,6 +20,18 @@ function App() {
 
   const clearScreen = () => {
     dispatch(clearDisplay())
+  }
+
+  const mPlusMemory = total => {
+    dispatch(mPlus(total))
+  }
+
+  const mRMemory = memory => {
+    dispatch(MR(memory))
+  }
+
+  const mCMemory = reset => {
+    dispatch(MC())
   }
 
   return (
@@ -40,9 +51,9 @@ function App() {
             </div>
             
             <div className="row">
-              <CalcButton value={"M+"}/>
-              <CalcButton value={"MR"}/>
-              <CalcButton value={"MC"}/>
+              <CalcButton onClick={() => mPlusMemory(state.total)} value={"M+"}/>
+              <CalcButton onClick={() => mRMemory(state.total)} value={"MR"}/>
+              <CalcButton onClick={mCMemory} value={"MC"}/>
             </div>
 
             <div className="row">
